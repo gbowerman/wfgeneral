@@ -64,6 +64,8 @@ def initapp():
 
 @app.route('/')
 def index():
+    if global_status == 'started':
+        initapp()
     return render_template('index.html', status = global_status)
 
 @app.route('/find', methods = ['POST', 'GET'])
@@ -80,5 +82,5 @@ def anagram():
 
 
 if __name__ == '__main__':
-    initapp()
+    #initapp()
     app.run()
