@@ -1,18 +1,14 @@
 from flask import Flask, render_template, request
 import sys
 
-#HOST = '0.0.0.0'
-#PORT = 8081
 WORDFILE = 'words.txt'
 
 app = Flask(__name__)
 wordlist = []
-
-global_status = 'started'
+global_init_flag = False # set this to True when app has initialized
 
 def load_words():
     '''load words of matching length from a file into a list of lists by word length'''
-    global global_status
     wordlist = [[] for i in range(30)]
     try:
         with open(WORDFILE) as wf:
@@ -20,8 +16,7 @@ def load_words():
                 wordlen = len(word) - 1  # remove linefeed from word
                 wordlist[wordlen].append(word[:-1])
     except FileNotFoundError:
-        # sys.exit('Error: cannot open file ' + WORDFILE)
-        global_status = "file not found"
+        sys.exit('Error: cannot open file ' + WORDFILE)
 
     return wordlist
 
@@ -42,7 +37,6 @@ def wordfind(partial_word):
     resultlist = []
     for word in wordlist[wordlen]:
         if word_match(partial_word, word, wordlen):
-            #print(word)
             resultlist.append(word)
     return resultlist
 
@@ -53,20 +47,21 @@ def anagfind(anagram):
     resultlist = []
     for word in wordlist[wordlen]:
         if srtdarr == sorted(word):
-            #print(word)
             resultlist.append(word)
     return resultlist
 
 def initapp():
-    global wordlist, global_status
-    global_status = 'initapp callled'
+    global wordlist, global_init_flag
     wordlist = load_words()
+    # initialization complete - set global status
+    global_init_flag = True
 
 @app.route('/')
 def index():
-    if global_status == 'started':
+    # initialize on first run
+    if global_init_flag == False:
         initapp()
-    return render_template('index.html', status = global_status)
+    return render_template('index.html')
 
 @app.route('/find', methods = ['POST', 'GET'])
 def findword():
@@ -82,5 +77,4 @@ def anagram():
 
 
 if __name__ == '__main__':
-    #initapp()
     app.run()
