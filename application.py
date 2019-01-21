@@ -8,8 +8,11 @@ WORDFILE = 'words.txt'
 app = Flask(__name__)
 wordlist = []
 
+global_status = 'started'
+
 def load_words():
     '''load words of matching length from a file into a list of lists by word length'''
+    global global_status
     wordlist = [[] for i in range(30)]
     try:
         with open(WORDFILE) as wf:
@@ -17,7 +20,9 @@ def load_words():
                 wordlen = len(word) - 1  # remove linefeed from word
                 wordlist[wordlen].append(word[:-1])
     except FileNotFoundError:
-        sys.exit('Error: cannot open file ' + WORDFILE)
+        # sys.exit('Error: cannot open file ' + WORDFILE)
+        global_status = "file not found"
+
     return wordlist
 
 
@@ -53,12 +58,13 @@ def anagfind(anagram):
     return resultlist
 
 def initapp():
-    global wordlist
+    global wordlist, global_status
+    global_status = 'initapp callled'
     wordlist = load_words()
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', status = global_status)
 
 @app.route('/find', methods = ['POST', 'GET'])
 def findword():
