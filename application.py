@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request
 import sys
 
-HOST = '0.0.0.0'
-PORT = 8081
+#HOST = '0.0.0.0'
+#PORT = 8081
 WORDFILE = 'words.txt'
 
 app = Flask(__name__)
@@ -75,4 +75,4 @@ def anagram():
 
 if __name__ == '__main__':
     initapp()
-    app.run(host=HOST, port=PORT)
+    app.run()
