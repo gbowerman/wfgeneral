@@ -106,14 +106,14 @@ def index():
 
 @app.route('/find', methods=['POST', 'GET'])
 def findword():
-    word = request.form['partial']
+    word = request.form['partial'].lower()
     resultlist = wordfind(word)
     return render_template('results.html', result=resultlist)
 
 
 @app.route('/anagram', methods=['POST', 'GET'])
 def anagram():
-    word = request.form['anagram']
+    word = request.form['anagram'].lower()
     resultlist = anagfind(word)
     return render_template('results.html', result=resultlist)
 
