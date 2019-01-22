@@ -111,17 +111,17 @@ def index():
 @app.route('/find', methods=['POST', 'GET'])
 def findword():
     word = request.form['partial'].lower()
-    if len(word) > 2 and len(word) < 30:
+    if len(word) > 2 and len(word) < 30 and '?' in word:
         resultlist = wordfind(word)
     else:
-        resultlist = ['Error: Partial word of between 3 and 29 letters required.']
+        resultlist = ['Error: Partial word of between 3 and 29 letters and question marks required.']
     return render_template('results.html', result=resultlist)
 
 
 @app.route('/anagram', methods=['POST', 'GET'])
 def anagram():
     word = request.form['anagram'].lower()
-    if len(word) > 2 and len(word) < 30:
+    if len(word) > 2 and len(word) < 30 and word.isalpha():
         resultlist = anagfind(word)
     else:
         resultlist = ['Error: Between 3 and 29 letters required.']
