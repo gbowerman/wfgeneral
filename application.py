@@ -40,9 +40,13 @@ def wordfind(partial_word):
     '''finds matching words in a list - '?' is wild'''
     wordlen = len(partial_word)
     resultlist = []
+    count = 0
     for word in wordlist[wordlen]:
         if word_match(partial_word, word, wordlen):
             resultlist.append(word)
+            count += 1
+        if count == 100:
+            break
     return resultlist
 
 
@@ -107,21 +111,35 @@ def index():
 @app.route('/find', methods=['POST', 'GET'])
 def findword():
     word = request.form['partial'].lower()
-    resultlist = wordfind(word)
+    if len(word) > 2:
+        resultlist = wordfind(word)
+    else:
+        resultlist = ['Error: Partial word of at least 3 letters required.']
     return render_template('results.html', result=resultlist)
 
 
 @app.route('/anagram', methods=['POST', 'GET'])
 def anagram():
     word = request.form['anagram'].lower()
-    resultlist = anagfind(word)
+    if len(word) > 2:
+        resultlist = anagfind(word)
+    else:
+        resultlist = ['Error: At least 3 letters required.']
     return render_template('results.html', result=resultlist)
 
 
 @app.route('/pwgen', methods=['POST', 'GET'])
 def pwgen():
-    numpwds = int(request.form['numpwds'])
-    resultlist = gen_passphrase(numpwds)
+    try:
+        numpwds = int(request.form['numpwds'])
+    except ValueError:
+        resultlist = ['Error: Enter an integer between 1 and 100.']
+        return render_template('results.html', result=resultlist)
+
+    if numpwds > 0 and numpwds <= 100:
+        resultlist = gen_passphrase(numpwds)
+    else:
+        resultlist = ['Error: Enter an integer between 1 and 100.']
     return render_template('results.html', result=resultlist)
 
 
