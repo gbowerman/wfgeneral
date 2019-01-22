@@ -7,6 +7,74 @@
 
 <body>
     <h1>Word finder general</h1>
+    <br />
+    <table>
+        <tr>
+            <td valign="top">
+                <table border="1">
+                    <tr>
+                        <td align="center">Word finder</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table>
+                                <form method="post" action="/find">
+                                    <tr>
+                                        <td>e.g. 'cr?pt?c'.</td>
+                                        <td valign="top"><input type="text" name="partial" size="15"></td>
+                                        <td align="right" valign="top"><input type="submit" name="submit" value="Find" /></td>
+                                    </tr>
+                                </form>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <br />
+            </td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td valign="top">
+                <table border="1">
+                    <tr>
+                        <td align="left">&nbsp;Anagram solver</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table>
+                                <form method="post" action="/anagram">
+                                    <tr>
+                                        <td>Anagram</td>
+                                        <td><input type="text" name="anagram" size="15"></td>
+                                        <td align="right"><input type="submit" name="submit" value="Solve" /></td>
+                                    </tr>
+                                </form>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td valign="top">
+                <table border="1">
+                    <tr>
+                        <td align="left">&nbsp;Passphrase generator</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table>
+                                <form method="post" action="/pwgen">
+                                    <tr>
+                                        <td>Number of phrases</td>
+                                        <td><input type="number" name="numpwds" size="3"></td>
+                                        <td align="right"><input type="submit" name="submit" value="Solve" /></td>
+                                    </tr>
+                                </form>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
     ...found the following words:<br />
     <br />
     <ul>
