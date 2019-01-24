@@ -3,33 +3,37 @@
 
 <head>
     <title>Word finder output</title>
+    <style>
+        button {
+        background-color: lightblue;
+      }</style>
 </head>
 
-<body>
+<body bgcolor="Azure">
     <ul>
-            <h1>Word finder general</h1>
-            <h3>Find words</h3>
-            <form method="post" action="/find">
-              Enter letters. E.g. 'cr?pt?c':
-              <input type="text" name="partial" size="10">
-              <input type="submit" name="submit" value="Find" />
-            </form>
-        
-            <h3>Anagrams</h3>
-            <form method="post" action="/anagram">
-              Enter letters. E.g. 'spears':
-              <input type="text" name="anagram" size="10">
-              <input type="submit" name="submit" value="Solve" />
-            </form>
-        
-            <h3>Generate pass phrases</h3>
-            <form method="post" action="/pwgen">
-              Enter number of phrases:
-              <input type="number" name="numpwds" step="1" min="1" max="100" value="5">
-              <input type="submit" name="submit" value="Generate" />
-            </form>
-    <br/>...found the following results:<br />
-    <br />
+        <h1>Word finder general</h1>
+        <h3>Find words</h3>
+        <form method="post" action="/find">
+            Enter letters. E.g. 'cr?pt?c':
+            <input type="text" pattern="[?A-Za-z]{3,29}" name="partial" size="10">
+            <button type="submit" value="Find">Find</button>
+        </form>
+
+        <h3>Anagrams</h3>
+        <form method="post" action="/anagram">
+            Enter letters. E.g. 'spears':
+            <input type="text" name="anagram" pattern="[A-Za-z]{3,29}" size="10">
+            <button type="submit" value="Solve">Solve</button>
+        </form>
+
+        <h3>Generate pass phrases</h3>
+        <form method="post" action="/pwgen">
+            Enter number of phrases:
+            <input type="number" name="numpwds" step="1" min="1" max="100" value="5">
+            <button type="submit" value="Generate">Generate</button>
+        </form>
+        <br />...found the following results:<br />
+        <br />
         <table>
             {% for word in result %}
             <tr>
