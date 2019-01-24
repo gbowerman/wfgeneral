@@ -93,7 +93,6 @@ def gen_passphrase(num_passphrases):
     return pass_list
 
 
-@app.before_first_request
 def initapp():
     # initialize on first run
     global wordlist, global_init_flag
