@@ -93,18 +93,23 @@ def gen_passphrase(num_passphrases):
     return pass_list
 
 
+@app.before_first_request
 def initapp():
+    # initialize on first run
     global wordlist, global_init_flag
     wordlist = load_words()
     # initialization complete - set global status
     global_init_flag = True
 
 
-@app.route('/')
-def index():
-    # initialize on first run
+@app.before_request
+def check_for_init():
     if global_init_flag == False:
         initapp()
+
+
+@app.route('/')
+def index():
     return render_template('index.html')
 
 
