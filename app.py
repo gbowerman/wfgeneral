@@ -158,7 +158,7 @@ def findword():
         resultlist = wordfind(word, incletters, excletters)
     else:
         resultlist = ['Error: Partial word of between 3 and 29 letters and question marks required.']
-    return render_template('results.html', result=resultlist)
+    return render_template('results.html', result=resultlist,partial=word,include=incletters,exclude=excletters,num=len(resultlist))
 
 
 @app.route('/anagram', methods=['POST', 'GET'])
@@ -168,7 +168,7 @@ def anagram():
         resultlist = anagfind(word)
     else:
         resultlist = ['Error: Between 3 and 29 letters required.']
-    return render_template('results.html', result=resultlist)
+    return render_template('results.html', result=resultlist,anagram=word,num=len(resultlist))
 
 
 @app.route('/pwgen', methods=['POST', 'GET'])
@@ -183,7 +183,7 @@ def pwgen():
         resultlist = gen_passphrase(numpwds)
     else:
         resultlist = ['Error: Enter an integer between 1 and 100.']
-    return render_template('results.html', result=resultlist)
+    return render_template('results.html', result=resultlist,num=numpwds)
 
 
 if __name__ == '__main__':
