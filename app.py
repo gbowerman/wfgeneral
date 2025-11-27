@@ -53,11 +53,20 @@ def excl_match(word, excletters):
     return True
 
 
-def wordfind(partial_word, incletters, excletters):
+def allowed_letters(word, allowedletters):
+    '''return true if all letters in word are in allowed letters'''
+    for letter in word:
+        if letter not in allowedletters:
+            return False
+    return True
+
+
+def wordfind(partial_word, incletters='', excletters='', allowedletters=''):
     '''finds matching words in a list - '?' is wild'''
     wordlen = len(partial_word)
     inclist = []
     exclist = []
+    allowedlist = []
     resultlist = []
     count = 0
 
@@ -79,6 +88,13 @@ def wordfind(partial_word, incletters, excletters):
             if excl_match(word, excletters):
                 exclist.append(word)
         resultlist = exclist
+
+    # filter for words matching allowed letters
+    if len(allowedletters) > 0:
+        for word in resultlist:
+            if allowed_letters(word, allowedletters):
+                allowedlist.append(word)
+        resultlist = allowedlist
 
     # truncate list at 100 words
     if len(resultlist) > 100:
@@ -154,11 +170,12 @@ def findword():
     word = request.form['partial'].lower()
     incletters = request.form['include'].lower()
     excletters = request.form['exclude'].lower()
+    allowedletters = request.form['allowed'].lower()
     if len(word) > 2 and len(word) < 30 and '?' in word:
-        resultlist = wordfind(word, incletters, excletters)
+        resultlist = wordfind(word, incletters, excletters, allowedletters)
     else:
         resultlist = ['Error: Partial word of between 3 and 29 letters and question marks required.']
-    return render_template('results.html', result=resultlist,partial=word,include=incletters,exclude=excletters,num=len(resultlist))
+    return render_template('results.html', result=resultlist,partial=word,include=incletters,exclude=excletters,allowed=allowedletters,num=len(resultlist))
 
 
 @app.route('/anagram', methods=['POST', 'GET'])

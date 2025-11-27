@@ -10,16 +10,24 @@
     <h1>Word finder general</h1>
     <h3>Find words</h3>
     <form method="post" action="/find">
-    Enter letters. E.g. 'cr?pt?c'. Optionally specify letters that must be included or excluded:<br/><br/>
-      <table>
+    Enter letters. E.g. 'cr?pt?c'. 
+    <br/><br/>
+    Optionally specify letters that must be included, excluded, or a superset of allowed letters:<br/><br/>
+    <table>
       <tr>
-      <th align="left">Partial</th><th align="left">Include</th><th align="left">Exclude</th><th></th>
+          <th align="left">Partial</th>
+	  <th align="left">Include</th>
+	  <th align="left">Exclude</th>
+	  <th align="left">Allowed Letters</th>
+	  <th></th>
       </tr><tr>
         <td><input type="text" pattern="[?A-Za-z]{3,29}" name="partial" size="10">
       </td><td>
         <input type="text" pattern="[?A-Za-z]{1,10}" name="include" size="10">
       </td><td>
       <input type="text" pattern="[?A-Za-z]{1,26}" name="exclude" size="5"></td>
+      </td><td>
+      <input type="text" pattern="[?A-Za-z]{1,26}" name="allowed" size="10"></td>
       <td> <button type="submit" value="Find">Find</button></td>
       </tr>
       </table>
